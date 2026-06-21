@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The HR AI Architect · Bianca Rohr</title>
+<meta name="description" content="A practitioner's framework for adopting AI in HR: Pains, Prompts, Processes, Frameworks. Built from shipped tools, not theory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2eee6;
+  --paper-2:#eae3d6;
+  --ink:#1a1a17;
+  --ink-soft:#5c564b;
+  --teal:#16433d;
+  --teal-bright:#1f6b60;
+  --ochre:#a9722b;
+  --rule:#d7cfc1;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+/* eyebrow / labels */
+.eyebrow{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--teal);font-weight:500;
+}
+a{color:var(--teal-bright);text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .2s,color .2s}
+a:hover,a:focus-visible{color:var(--ink);border-color:var(--teal)}
+a:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+
+/* ---------- header ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;
+  padding:26px 0;border-bottom:1px solid var(--rule)}
+.mark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+.mark span{color:var(--teal)}
+.topbar nav{font-family:var(--mono);font-size:.8rem;display:flex;gap:22px}
+.topbar nav a{border:none;color:var(--ink-soft)}
+.topbar nav a:hover{color:var(--teal)}
+@media(max-width:620px){.topbar nav{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding:78px 0 64px}
+.hero .eyebrow{margin-bottom:22px}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(2.4rem,6.2vw,4.3rem);line-height:1.02;letter-spacing:-.035em;
+  max-width:16ch;
+}
+.hero h1 em{font-style:normal;color:var(--teal);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.08em;
+  height:.12em;background:var(--ochre);opacity:.5}
+.hero p.lead{margin-top:26px;font-size:1.2rem;color:var(--ink-soft);max-width:54ch}
+.hero .by{margin-top:30px;font-family:var(--mono);font-size:.82rem;color:var(--ink-soft)}
+.hero .by b{color:var(--ink);font-weight:500}
+
+/* ---------- the structure (signature) ---------- */
+.structure{padding:34px 0 80px}
+.load-top,.load-base{
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;color:var(--ink-soft);
+  padding:12px 16px;border:1px solid var(--rule);background:var(--paper-2);
+  text-align:center;border-radius:4px;
+}
+.load-top{margin-bottom:0;border-bottom:none;color:var(--ochre)}
+.beam{height:10px;background:var(--ink);margin:0;}
+.columns{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+}
+.col{
+  border:1px solid var(--rule);border-top:none;border-right:none;
+  background:var(--paper);padding:26px 22px 30px;position:relative;
+  transition:background .25s,transform .25s;
+}
+.col:last-child{border-right:1px solid var(--rule)}
+.col:hover{background:var(--paper-2);transform:translateY(-3px)}
+.col .num{font-family:var(--mono);font-size:.72rem;color:var(--teal);letter-spacing:.1em}
+.col h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.32rem;
+  margin:8px 0 10px;letter-spacing:-.01em}
+.col p{font-size:.95rem;color:var(--ink-soft);margin-bottom:16px}
+.col .proof{font-family:var(--mono);font-size:.76rem;display:inline-block;
+  border:none;border-bottom:1px solid var(--teal);color:var(--teal-bright);padding-bottom:1px}
+.col .proof::before{content:"▸ ";color:var(--ochre)}
+.beam-base{height:10px;background:var(--ink)}
+.load-base{margin-top:0;border-top:none;color:var(--teal);font-weight:500}
+@media(max-width:760px){
+  .columns{grid-template-columns:1fr}
+  .col{border-right:1px solid var(--rule)}
+  .col:hover{transform:none}
+}
+
+/* ---------- section frame ---------- */
+section.block{padding:64px 0;border-top:1px solid var(--rule)}
+.block .eyebrow{margin-bottom:18px}
+.block h2{font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(1.7rem,4vw,2.4rem);letter-spacing:-.02em;max-width:20ch}
+.block .body{margin-top:20px;max-width:62ch;color:var(--ink-soft)}
+.block .body p{margin-bottom:16px}
+.block .body strong{color:var(--ink);font-weight:600}
+
+/* evidence list */
+.evidence{margin-top:32px;display:grid;gap:0;border-top:1px solid var(--rule)}
+.ev{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:baseline;
+  padding:18px 4px;border-bottom:1px solid var(--rule)}
+.ev .name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem}
+.ev .desc{grid-column:1/-1;font-size:.92rem;color:var(--ink-soft);margin-top:2px}
+.ev .lang{font-family:var(--mono);font-size:.74rem;color:var(--teal)}
+
+/* ---------- connect ---------- */
+.connect{padding:70px 0 30px;border-top:1px solid var(--rule)}
+.connect h2{font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;max-width:18ch}
+.connect p{margin-top:18px;color:var(--ink-soft);max-width:50ch}
+.connect .cta{margin-top:28px;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.86rem;font-weight:500;
+  background:var(--ink);color:var(--paper);padding:13px 22px;border-radius:5px;border:none}
+.connect .cta:hover,.connect .cta:focus-visible{background:var(--teal)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--rule);margin-top:50px;
+  font-family:var(--mono);font-size:.76rem;color:var(--ink-soft);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="mark">The HR AI <span>Architect</span></div>
+    <nav>
+      <a href="#framework">Framework</a>
+      <a href="#approach">Approach</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#connect">Connect</a>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">A practitioner's framework for HR + AI</div>
+    <h1>Most HR AI advice is written by people <em>selling something</em>.</h1>
+    <p class="lead">This isn't. It's the method I use to bring AI into HR teams safely: built
+    from tools I shipped and piloted with real stakeholders, not from theory.</p>
+    <p class="by">by <b>Bianca Rohr</b> — HR Data &amp; AI Analyst, AI Solutions Builder</p>
+  </header>
+
+  <!-- SIGNATURE: the framework as load-bearing structure -->
+  <section class="structure" id="framework" aria-label="The four-pillar framework">
+    <div class="load-top">load in &nbsp;·&nbsp; HR reality: real pain, real risk, a lot of hype</div>
+    <div class="beam"></div>
+    <div class="columns">
+      <div class="col reveal">
+        <div class="num">01</div>
+        <h3>Pains</h3>
+        <p>Start from the HR problems AI can actually solve, and be honest about the ones it
+        can't. Document fraud in onboarding was one worth solving.</p>
+        <a class="proof" href="https://github.com/builtbybianca/hr-idv-fraud-detection">hr-idv-fraud-detection</a>
+      </div>
+      <div class="col reveal">
+        <div class="num">02</div>
+        <h3>Prompts</h3>
+        <p>Production-tested prompt patterns for real HR workflows, with guardrails written
+        into the prompt rather than hoped for.</p>
+        <a class="proof" href="https://github.com/builtbybianca/hr-ai-prompt-library">hr-ai-prompt-library</a>
+      </div>
+      <div class="col reveal">
+        <div class="num">03</div>
+        <h3>Processes</h3>
+        <p>How AI actually reaches a workflow: the integration layer, the rollout, the
+        training, and the governance that earns sign-off.</p>
+        <a class="proof" href="https://github.com/builtbybianca/hris-mcp-connector">hris-mcp-connector</a>
+      </div>
+      <div class="col reveal">
+        <div class="num">04</div>
+        <h3>Frameworks</h3>
+        <p>Decision tools that keep a human in the loop: scoring rubrics, bias guardrails,
+        and verify-don't-accuse design.</p>
+        <a class="proof" href="https://github.com/builtbybianca/ai-resume-screener">ai-resume-screener</a>
+      </div>
+    </div>
+    <div class="beam-base"></div>
+    <div class="load-base">out &nbsp;·&nbsp; AI that leadership, legal, and a DPO will actually approve</div>
+  </section>
+
+  <section class="block" id="approach">
+    <div class="eyebrow">How I work</div>
+    <h2>Governance-first, adoption-focused, production over portfolio.</h2>
+    <div class="body">
+      <p><strong>Governance-first.</strong> Every system I build ships with human-in-the-loop
+      design, bias guardrails, and documentation a DPO can read cold and sign off on. The
+      restraint is the feature, not a constraint on it.</p>
+      <p><strong>Adoption-focused.</strong> A tool nobody uses solves nothing. I build the
+      training and change management that get a team actually working differently, not just
+      a clever script that sits unused.</p>
+      <p><strong>Production over portfolio.</strong> The work behind this framework ran on
+      real HR workflows with real stakeholders, with the messy edges that only show up once
+      something is live.</p>
+    </div>
+  </section>
+
+  <section class="block" id="evidence">
+    <div class="eyebrow">Evidence</div>
+    <h2>The framework, as shipped code.</h2>
+    <div class="body"><p>Each pillar above points to something real. Here they all are.</p></div>
+    <div class="evidence">
+      <div class="ev">
+        <span class="name"><a href="https://github.com/builtbybianca/hris-mcp-connector">hris-mcp-connector</a></span>
+        <span class="lang">Python</span>
+        <span class="desc">A Model Context Protocol server exposing read-only HRIS tools to AI clients, over a swappable mock data layer.</span>
+      </div>
+      <div class="ev">
+        <span class="name"><a href="https://github.com/builtbybianca/hr-idv-fraud-detection">hr-idv-fraud-detection</a></span>
+        <span class="lang">Python</span>
+        <span class="desc">Identity-document fraud signals from EXIF metadata. Signals for human review, never verdicts. Piloted in production.</span>
+      </div>
+      <div class="ev">
+        <span class="name"><a href="https://github.com/builtbybianca/ai-resume-screener">ai-resume-screener</a></span>
+        <span class="lang">Python</span>
+        <span class="desc">Resume fit-scoring with the Claude API, structured rubrics, bias guardrails, and a name-bias invariance test.</span>
+      </div>
+      <div class="ev">
+        <span class="name"><a
