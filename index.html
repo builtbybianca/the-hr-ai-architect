@@ -131,8 +131,10 @@ footer{padding:40px 0 60px;border-top:1px solid var(--rule);margin-top:50px;
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 /* scroll reveal */
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:none}
+.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+/* only hide-then-reveal when JS is active and motion is allowed */
+.js-anim .reveal{opacity:0;transform:translateY(16px)}
+.js-anim .reveal.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -231,4 +233,50 @@ footer{padding:40px 0 60px;border-top:1px solid var(--rule);margin-top:50px;
         <span class="desc">Resume fit-scoring with the Claude API, structured rubrics, bias guardrails, and a name-bias invariance test.</span>
       </div>
       <div class="ev">
-        <span class="name"><a
+        <span class="name"><a href="https://github.com/builtbybianca/resume-integrity-checker">resume-integrity-checker</a></span>
+        <span class="lang">Python</span>
+        <span class="desc">Flags resume claims for verification, with a neutrality guard enforced in code. Verify, don't accuse.</span>
+      </div>
+      <div class="ev">
+        <span class="name"><a href="https://github.com/builtbybianca/hr-ai-prompt-library">hr-ai-prompt-library</a></span>
+        <span class="lang">Markdown</span>
+        <span class="desc">Production-tested prompts powering an HR team's daily AI workflows, with a governance review checklist.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="connect" id="connect">
+    <div class="eyebrow">Connect</div>
+    <h2>Building something at the intersection of HR and AI?</h2>
+    <p>I'm open to AI engineering and HR AI roles. The clearest picture of how I work is the
+    code itself. Start there.</p>
+    <a class="cta" href="https://github.com/builtbybianca">View my work on GitHub →</a>
+  </section>
+
+  <footer>
+    <span>The HR AI Architect</span>
+    <span>Bianca Rohr · builtbybianca</span>
+  </footer>
+
+</div>
+
+<script>
+// gentle scroll reveal, reduced-motion aware.
+// Columns are visible by default; we only opt into the hidden->reveal animation
+// when JS + IntersectionObserver are available AND motion is allowed.
+const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!rm && 'IntersectionObserver' in window) {
+  document.documentElement.classList.add('js-anim');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+  // Reveal immediately anything already in view on load, observe the rest.
+  document.querySelectorAll('.reveal').forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) { el.classList.add('in'); }
+    else { io.observe(el); }
+  });
+}
+</script>
+</body>
+</html>
